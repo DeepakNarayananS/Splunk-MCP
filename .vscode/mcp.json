@@ -1,0 +1,30 @@
+{
+  "inputs": [
+    {
+      "type": "promptString",
+      "id": "splunk-mcp-token",
+      "description": "Splunk MCP bearer token",
+      "password": true
+    }
+  ],
+  "servers": {
+    "splunkMcp": {
+      "type": "stdio",
+      "command": "npx.cmd",
+      "args": [
+        "-y",
+        "mcp-remote",
+        "https://127.0.0.1:8089/services/mcp",
+        "--silent",
+        "--transport",
+        "http-first",
+        "--header",
+        "Authorization: Bearer ${SPLUNK_MCP_TOKEN}"
+      ],
+      "env": {
+        "SPLUNK_MCP_TOKEN": "${input:splunk-mcp-token}",
+        "NODE_TLS_REJECT_UNAUTHORIZED": "0"
+      }
+    }
+  }
+}
